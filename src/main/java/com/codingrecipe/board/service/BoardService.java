@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,12 +31,14 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardFileRepository boardFileRepository;
     public void save(BoardDTO boardDTO) throws IOException {
+        System.out.println(boardDTO.getBoardFile());
         // 파일 첨부 여부에 따라 로직 분리
-        if (boardDTO.getBoardFile().isEmpty()) {
+        if (boardDTO.getBoardFile() == null || boardDTO.getBoardFile().isEmpty())  {
             // 첨부 파일 없음.
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             boardRepository.save(boardEntity);
         } else {
+
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
             Long savedId = boardRepository.save(boardEntity).getId();
             BoardEntity board = boardRepository.findById(savedId).get();

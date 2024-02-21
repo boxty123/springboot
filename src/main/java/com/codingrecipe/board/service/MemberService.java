@@ -13,18 +13,16 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    public void save(MemberDTO memberDTO){
-        MemberEntity memberEntity=MemberEntity.toSaveEntity(memberDTO);
-        CheckSave(memberEntity);
-        memberRepository.save(memberEntity);
-    }
-
-
-    public void CheckSave(MemberEntity memberEntity){
-        memberRepository.findByName(memberEntity.getName()).ifPresent(m->{
+    public void save(MemberDTO memberDTO) {
+        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
+        if (idCheck(memberEntity.getName()) == null) {
+            System.out.println("fail");
             throw new IllegalStateException(("이미 존재"));
-        } );
+        }else {
+            memberRepository.save(memberEntity);
+        }
     }
+
 
     public MemberDTO login(MemberDTO memberDTO) {
         Optional<MemberEntity> byName = memberRepository.findByName(memberDTO.getName());
@@ -38,6 +36,15 @@ public class MemberService {
             }
         }else{
             return null;
+        }
+    }
+
+    public String idCheck(String memberID) {
+        Optional<MemberEntity> byName = memberRepository.findByName(memberID);
+        if(byName.isPresent()){
+            return null;
+        }else{
+            return "ok";
         }
     }
 }

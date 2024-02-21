@@ -14,7 +14,11 @@
 
     <button onclick="saveReq()">글작성</button>
     <button onclick="pagingReq()">글목록</button>
+    <button onclick="logoutReq()">로그아웃</button>
+    <p th:text="${session.loginName}"></p>
 </tr>
+
+
 </body>
 <script>
 
@@ -31,6 +35,10 @@
 
   const pagingReq = () => {
     location.href = "/board/paging";
+  }
+
+  const logoutReq=()=>{
+      location.href="/board/logout"
   }
 
 

@@ -4,10 +4,7 @@ import com.codingrecipe.board.dto.MemberDTO;
 import com.codingrecipe.board.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -47,5 +44,29 @@ public class MemberController {
         } else {
             return "login";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
+
+    @PostMapping("/id-check")
+    public @ResponseBody String idCheck(@RequestParam("memberID") String memberID) {
+        String checkRet = memberService.idCheck(memberID);
+        if (checkRet != null) {
+            return "ok";
+        } else {
+            return "fail";
+        }
+    }
+
+    @PostMapping("/login-check")
+    public @ResponseBody String loginCheck(@RequestParam("memberID")String memberID,@RequestParam("memberPass")String memberPass){
+
+        System.out.println("여기");
+        //String checkRet=memberService
+        return"";
     }
 }

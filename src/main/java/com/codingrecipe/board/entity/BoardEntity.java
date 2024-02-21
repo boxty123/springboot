@@ -3,8 +3,10 @@ package com.codingrecipe.board.entity;
 import com.codingrecipe.board.dto.BoardDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 

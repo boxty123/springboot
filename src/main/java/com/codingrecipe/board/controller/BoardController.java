@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,14 +23,16 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
 
+
     @GetMapping("/save")
     public String saveForm() {
         return "save";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
+    public String save(@ModelAttribute BoardDTO boardDTO,HttpSession httpSession) throws IOException {
         System.out.println("boardDTO = " + boardDTO);
+        boardDTO.setBoardWriter((String)httpSession.getAttribute("loginName"));
         boardService.save(boardDTO);
         return "index";
     }
@@ -70,7 +73,7 @@ public class BoardController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         boardService.delete(id);
-        return "redirect:/board/";
+        return "redirect:/board/paging";
     }
 
     // /board/paging?page=1

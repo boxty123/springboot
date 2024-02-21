@@ -36,6 +36,9 @@
         <th>image</th>
         <td><img th:src="@{|/upload/${board.storedFileName}|}" alt=""></td>
     </tr>
+    <tr>
+
+    </tr>
 </table>
 <button onclick="listReq()">목록</button>
 <button onclick="updateReq()">수정</button>
@@ -68,6 +71,13 @@
 
 </body>
 <script th:inline="javascript">
+
+
+    const like=()=>{
+        $.ajax({
+
+        })
+    }
     const commentWrite = () => {
         const writer = document.getElementById("commentWriter").value;
         const contents = document.getElementById("commentContents").value;
@@ -125,4 +135,5 @@
         location.href = "/board/delete/" + id;
     }
 </script>
+
 </html>
