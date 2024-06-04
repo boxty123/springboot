@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="container">
+  <form action="/board/saveMember" method="post">
+    <div class="form-group">
+      <label for="Name">이름</label>
+      <input type="text" id="Name" name="Name" onblur="idCheck()" placeholder="이름 입력">
+      <span id="check_ret"></span>
+      <label for="Password">비밀번호</label>
+      <input type="password" id="Password" name="Password" placeholder="비밀번호 입력">
+      <label for="Email">이메일</label>
+      <input type="email" id="Email" name="Email" placeholder="이메일 입력">
+    </div>
+    <button type="submit">등록</button>
+  </form>
+</div>
+</body>
+<script th:inline="javascript">
+  const idCheck=()=>{
+    const id=document.getElementById("Name").value;
+    const checkRet=document.getElementById("check_ret");
+    $.ajax({
+      type: "post",
+      url: "/board/id-check",
+      data:{
+        "memberID":id
+      },
+      success: function (res) {
+        if(res==="ok") {
+          console.log("사용가능");
+          checkRet.style.color="green";
+          checkRet.innerHTML = "사용가능";
+        }else {
+          console.log("사용불가");
+          checkRet.style.color="red";
+          checkRet.innerHTML = "사용불가";
+        }
+      },
+      error: function (err) {
+
+      }
+    })
+
+  }
+</script>
+</html>

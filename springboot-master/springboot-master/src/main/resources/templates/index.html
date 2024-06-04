@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+<tr th:if="${session.loginName==null}">
+
+    <button onclick="loginReq()">로그인</button>
+    <button onclick="saveMemReq()">회원가입</button>
+</tr>
+<tr th:if="${session.loginName!=null}">
+
+    <button onclick="saveReq()">글작성</button>
+    <button onclick="pagingReq()">글목록</button>
+    <button onclick="logoutReq()">로그아웃</button>
+    <p th:text="${session.loginName}"></p>
+</tr>
+
+
+</body>
+<script>
+
+  const loginReq=()=>{
+      location.href="/board/login"
+  }
+
+  const saveMemReq=()=>{
+      location.href="/board/saveMember"
+  }
+  const saveReq = () => {
+    location.href = "/board/save";
+  }
+
+  const pagingReq = () => {
+    location.href = "/board/paging";
+  }
+
+  const logoutReq=()=>{
+      location.href="/board/logout"
+  }
+
+
+</script>
+</html>
